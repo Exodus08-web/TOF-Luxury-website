@@ -213,11 +213,11 @@ nav a:hover { color: var(--gold); }
   position: relative;
   overflow: hidden;
   height: 650px;
-  background: #f0f0f0;
+  background: transparent;
 }
 
 .image-wrap img {
-  width: 100%;
+  max-width: 90%;
   height: 120%; 
   object-fit: cover;
   transition: transform 1.5s var(--ease);
@@ -231,15 +231,16 @@ nav a:hover { color: var(--gold); }
 .btn-primary, .load-btn {
   background: var(--dark);
   color: white;
-  padding: 20px 45px;
+  padding: 20px 35px;
   text-decoration: none;
   display: inline-block;
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-size: 10px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   border: 1px solid var(--dark);
   cursor: pointer;
   transition: 0.4s var(--ease);
+  max-width: 300px;
 }
 
 .btn-primary:hover { background: transparent; color: var(--dark); }
