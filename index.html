@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToF Luxury | Private Collection</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://googleapis.com" rel="stylesheet">
+
+<style>
+
+html {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none; 
+  width: 0;
+  height: 0;
+}
+
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:root {
+  --gold: #d4af37;
+  --champagne: #f7f3f0;
+  --dark: #1a1a1a;
+  --glass: rgba(255, 255, 255, 0.75);
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--champagne);
+  color: var(--dark);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  animation: fadeInPage 1.5s var(--ease);
+}
+
+@keyframes fadeInPage {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400; 
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 8%;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.5s var(--ease);
+}
+
+nav.scrolled {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  padding: 15px 8%;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+nav h2 { 
+  font-size: 28px; 
+  letter-spacing: 8px;
+  transition: all 0.4s var(--ease);
+}
+
+nav a {
+  margin-left: 30px;
+  text-decoration: none;
+  color: var(--dark);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+nav a:hover { color: var(--gold); }
+
+
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 10% 0 8%; 
+  gap: 40px;
+  overflow: hidden; 
+  position: relative;
+}
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; 
+}
+
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  filter: contrast(1.05) brightness(0.9); 
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(247, 243, 240, 0.7); 
+  
+}
+.hero-text { 
+  flex: 1; 
+  z-index: 2; 
+  max-width: 600px; 
+}
+
+.hero-text h1 {
+  font-size: clamp(40px, 6vw, 80px); 
+  line-height: 1.1;
+  margin-bottom: 25px;
+  letter-spacing: 8px; 
+}
+
+.tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: #777;
+  margin-bottom: 40px;
+}
+
+.wheel-container {
+  flex: 1;
+  perspective: 1500px;
+  display: flex;
+  justify-content: center;
+  margin-right: 40px;
+  position: relative; 
+  z-index: 10;       
+}
+
+
+.wheel {
+  width: 250px;
+  height: 350px;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform-style: preserve-3d;
+  animation: spin 15s linear infinite;
+}
+
+.wheel div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+  background: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  backface-visibility: hidden; 
+  -webkit-backface-visibility: hidden;
+}
+
+.wheel img { width: 100%; height: 100%; object-fit: cover; }
+
+@keyframes spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+
+.split {
+  padding: 100px 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 1.2s all var(--ease);
+}
+
+.split.reveal { opacity: 1; transform: translateY(0); }
+
+.image-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 650px;
+  background: #f0f0f0;
+}
+
+.image-wrap img {
+  width: 100%;
+  height: 120%; 
+  object-fit: cover;
+  transition: transform 1.5s var(--ease);
+}
+
+.image-wrap:hover img { transform: scale(1.05); }
+
+.split-content h2 { font-size: 42px; margin-bottom: 25px; }
+
+
+.btn-primary, .load-btn {
+  background: var(--dark);
+  color: white;
+  padding: 20px 45px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: 1px solid var(--dark);
+  cursor: pointer;
+  transition: 0.4s var(--ease);
+}
+
+.btn-primary:hover { background: transparent; color: var(--dark); }
+
+.load-btn {
+  background: transparent;
+  color: var(--dark);
+  width: 100%;
+  margin-top: 35px;
+}
+
+.load-btn:hover { background: var(--dark); color: white; }
+
+
+.social-sidebar {
+  position: fixed;
+  right: 20px; 
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  z-index: 1001;
+  padding: 10px; 
+}
+
+
+.social-link {
+  writing-mode: vertical-rl;
+  text-decoration: none;
+  color: var(--dark);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.5;
+  transition: 0.4s;
+}
+
+.social-link:hover { opacity: 1; color: var(--gold); transform: translateX(-5px); }
+
+
+@media (max-width: 768px) {
+  nav { padding: 20px 5%; justify-content: center; }
+  nav div { 
+  display: flex !important; 
+  gap: 10px; 
+}
+nav a { 
+  margin-left: 26px; 
+  font-size: 9px; 
+}
+
+
+  .hero {
+    flex-direction: column-reverse;
+    height: auto;
+    padding: 120px 6% 60px;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .hero-text h1 { font-size: 42px; letter-spacing: 8px; }
+
+  .wheel-container { height: 220px; margin-right: 0;}
+  .wheel { width: 140px; height: 190px; }
+
+  @media (max-width: 768px) {
+  
+  .wheel div:nth-child(1) { transform: rotateY(0deg) translateZ(140px) !important; }
+  .wheel div:nth-child(2) { transform: rotateY(72deg) translateZ(140px) !important; }
+  .wheel div:nth-child(3) { transform: rotateY(144deg) translateZ(140px) !important; }
+  .wheel div:nth-child(4) { transform: rotateY(216deg) translateZ(140px) !important; }
+  .wheel div:nth-child(5) { transform: rotateY(288deg) translateZ(140px) !important; }
+}
+
+
+  .split {
+    grid-template-columns: 1fr;
+    padding: 60px 6%;
+    gap: 40px;
+  }
+
+  /* Force images to stay on top on mobile */
+  .image-wrap { height: 450px; order: -1; }
+  
+  /* Reset parallax for mobile performance */
+  .image-wrap img { height: 100%; position: relative; top: 0; }
+
+  .social-sidebar { 
+  display: flex !important; 
+  right: 4px; 
+  gap: 20px; 
+}
+
+}
+nav.scrolled {
+  backdrop-filter: blur(15px); /* Creates that frosted glass look */
+  -webkit-backdrop-filter: blur(15px); /* Support for Safari/iPhone */
+}
+
+</style>
+
+</head>
+<body>
+
+  <div class="social-sidebar">
+  <a href="https://www.instagram.com/tofhairs?igsh=MWZlMG5vY2luc3pxZA==" target="_blank" class="social-link">Instagram</a>
+  <a href="https://www.tiktok.com/@tofhairandfootwears?_r=1&_t=ZS-95z2DoymNd7" target="_blank" class="social-link">TikTok</a>
+  <a href="https://wa.me/message/KKHEVOFG4NJPN1" target="_blank" class="social-link">WhatsApp</a>
+</div>
+
+<nav id="navbar">
+  <h2>ToF</h2>
+  <div>
+    <a href="#footwear">Footwear</a>
+    <a href="#bags">Bags</a>
+    <a href="#hair">Hair</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="video-background">
+    
+<video autoplay muted loop playsinline preload="metadata">
+  <source src="Background video.mp4" type="video/mp4">
+</video>
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-text">
+    <p style="text-transform: uppercase; letter-spacing: 5px; color: var(--gold); margin-bottom: 10px;">The 2026 Collection</p>
+    <h1>Refined<br>Elegance</h1>
+    <p class="tagline">Not just fashion. A statement of presence.</p>
+    
+    <div class="hero-actions">
+      <a href="#footwear" class="btn-primary">Shop the Collection</a>
+    </div>
+  </div>
+
+  <div class="wheel-container">
+    <div class="wheel">
+      
+<div style="transform: rotateY(0deg) translateZ(250px);">
+  <img src="Hair 5.JPG" loading="lazy">
+</div>
+      <div style="transform: rotateY(72deg) translateZ(250px);"><img src="Bag 1.JPG" loading="lazy"></div>
+      <div style="transform: rotateY(144deg) translateZ(250px);"><img src="Shoe 14.JPG" loading="lazy"></div>
+      <div style="transform: rotateY(216deg) translateZ(250px);"><img src="Hair 3.JPG" loading="lazy"></div>
+      <div style="transform: rotateY(288deg) translateZ(250px);"><img src="Shoe 7.JPG" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section id="footwear" class="split">
+  <div class="image-wrap">
+    <img src="Shoe 9.JPG">
+  </div>
+  <div class="split-content">
+    <h2 style="font-size: 48px; margin-bottom: 20px;">Elite Footwear</h2>
+    <p style="color: #666; line-height: 1.8; margin-bottom: 30px;">Step into the room and let your presence be felt before a single word is spoken. Our curated footwear collection combines Italian craftsmanship with modern silhouettes.</p>
+    <button class="load-btn" onclick="location.href='shoes.html'">Enter Gallery</button>
+  </div>
+</section>
+
+<section id="bags" class="split" style="flex-direction: row-reverse; display: grid;">
+ 
+  <div class="split-content" style="padding-right: 50px;">
+    <p style="text-transform: uppercase; letter-spacing: 5px; color: var(--gold); margin-bottom: 10px;">Accessories</p>
+    <h2 style="font-size: 48px; margin-bottom: 20px;">Signature Bags</h2>
+    <p style="color: #666; line-height: 1.8; margin-bottom: 30px;">
+      More than an accessory, our bags are a legacy. Hand-selected leathers and 
+      bespoke hardware designed for the woman who carries her world with grace.
+    </p>
+    <button class="load-btn" onclick="location.href='bags.html'">Explore Silhouettes</button>
+  </div>
+  <div class="image-wrap">
+    <img src="Bag 3.JPG" alt="Luxury Bag Collection">
+  </div>
+</section>
+
+<!-- HAIR COLLECTION -->
+<section id="hair" class="split">
+  <div class="image-wrap">
+    <img src="Hair 2.JPG" alt="Premium Hair Collection">
+  </div>
+  <div class="split-content">
+    <p style="text-transform: uppercase; letter-spacing: 5px; color: var(--gold); margin-bottom: 10px;">The Crown</p>
+    <h2 style="font-size: 48px; margin-bottom: 20px;">Premium Artistry</h2>
+    <p style="color: #666; line-height: 1.8; margin-bottom: 30px;">
+      Pure, ethically sourced, and meticulously treated. Our hair collection 
+      offers the volume, shine, and longevity that defines true luxury hair.
+    </p>
+    <button class="load-btn" onclick="location.href='hair.html'">View All Textures</button>
+  </div>
+</section>
+
+<footer style="padding: 100px 8% 50px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05);">
+  <h2 style="letter-spacing: 10px; margin-bottom: 30px;">ToF</h2>
+  <div style="margin-bottom: 30px;">
+    <a href="https://wa.me/message/KKHEVOFG4NJPN1" style="text-decoration: none; color: var(--dark); font-size: 12px; letter-spacing: 2px; border: 1px solid var(--dark); padding: 10px 25px;">REQUEST PRIVATE CONSULTATION</a>
+  </div>
+  <p style="font-size: 10px; color: #aaa; letter-spacing: 1px;">© 2026 TOF LUXURY. ALL RIGHTS RESERVED.</p>
+</footer>
+
+
+<script>
+  // 1. HIGH-PERFORMANCE SCROLL (Navbar & Logo)
+  const nav = document.getElementById('navbar');
+  const logo = document.querySelector('nav h2');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+      logo.style.fontSize = '20px';
+      logo.style.letterSpacing = '3px';
+    } else {
+      nav.classList.remove('scrolled');
+      logo.style.fontSize = '28px';
+      logo.style.letterSpacing = '8px';
+    }
+  }, { passive: true });
+
+  // 2. OPTIMIZED REVEAL LOGIC (Intersection Observer)
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal');
+        revealObserver.unobserve(entry.target); // Saves memory
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.split').forEach(sec => revealObserver.observe(sec));
+
+  const btns = document.querySelectorAll('.btn-primary, .load-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = `translate(0, 0)`;
+    });
+  });
+
+  function order() {
+    const phone = "2348139205497";
+    const msg = encodeURIComponent("Hello Tof, I'd love like to make an enquiry about a product");
+    window.open(`https://wa.me{phone}?text=${msg}`, '_blank');
+  }
+</script>
+
+
+</body>
+</html>
