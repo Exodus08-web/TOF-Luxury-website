@@ -307,13 +307,13 @@ bags.forEach((item, index) => {
       <div class="item-overlay">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <button class="order-btn" onclick="order('${item.name}', '${item.price}')">Inquire via WhatsApp</button>
+        <button class="order-btn" type="button" onclick="order('${item.name}', '${item.price}')">Inquire via WhatsApp</button>
       </div>
 
       <div class="mobile-info">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <button class="order-btn" onclick="order('${item.name}', '${item.price}')">Order Now</button>
+        <button class="order-btn" type="button" onclick="order('${item.name}', '${item.price}')">Order Now</button>
       </div>
     </div>
   `;
@@ -326,7 +326,7 @@ function order(name, price) {
   const cleanName = name.replace('<br/>', ' ');
   const msg = encodeURIComponent(`Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is this piece available?`);
   
-  window.open(`https://wa.me{phone}?text=${msg}`, '_blank');
+  window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
 }
 
 
@@ -348,14 +348,6 @@ backBtn.addEventListener('mousemove', (e) => {
 backBtn.addEventListener('mouseleave', () => {
     backBtn.style.transform = `translate(0, 0)`;
 });
-
-function order(name) {
-  const phone = "2348139205497"; 
-  const msg = encodeURIComponent(`Hello ToF Luxury, I'd like to order this piece: ${name}.`);
-  
-  
-  window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
-}
 
 
 
