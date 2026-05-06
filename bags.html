@@ -185,8 +185,6 @@ h1 {
   .gallery { grid-template-columns: 1fr 1fr; gap: 15px; }
   .item { padding: 8px; }
 
-  /* FIX: Allow the overlay to exist on mobile */
-  @media (max-width: 768px) {
   .item-overlay { 
     opacity: 0;
     pointer-events: none;
@@ -196,10 +194,10 @@ h1 {
     opacity: 1;
     pointer-events: auto;
   }
-}
-
   .mobile-info { display: none; } /* Hide this to avoid double info */
 }
+
+
 
 /* 2. SPEED UP THE ENTRANCE */
 .item {
@@ -312,20 +310,6 @@ const bags = [
 
 const gallery = document.getElementById('gallery');
 
-document.querySelectorAll('.item').forEach(item => {
-  item.addEventListener('click', function(e) {
-    
-    // If user clicked the button, don't toggle
-    if (e.target.closest('.order-btn')) return;
-
-    // Close others (optional, cleaner UX)
-    document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
-
-    // Open this one
-    this.classList.add('active');
-  });
-});
-
 // 1. Inject Items
 bags.forEach((item, index) => {
   // We use item.price in the onclick so the price is sent too!
@@ -352,6 +336,24 @@ bags.forEach((item, index) => {
       </div>
     </div>
   `;
+});
+document.querySelectorAll('.item').forEach(item => {
+  item.addEventListener('click', function(e) {
+    
+    // If user clicked the button, don't toggle
+    if (e.target.closest('.order-btn')) return;
+
+    // Close others (optional, cleaner UX)
+    document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+
+    // Open this one
+    this.classList.add('active');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.item')) {
+    document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+  }
 });
 
 // 3. Trigger Entrance Animation
