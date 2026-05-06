@@ -186,6 +186,7 @@ h1 {
   }
   .item:active .item-overlay { 
     opacity: 1; 
+    pointer-events: auto;
   }
 
   .mobile-info { display: none; } 
@@ -311,15 +312,19 @@ bags.forEach((item, index) => {
       </div>
       
       <div class="item-overlay">
-        <h3>${item.name}</h3>
-        <p class="price">${item.price}</p>
-        <button class="order-btn" onclick="order('${item.name}', '${item.price}')">Inquire via WhatsApp</button>
-      </div>
+  <h3>${item.name}</h3>
+  <p class="price">${item.price}</p>
+  <button class="order-btn" onclick="order('${item.name}', '${item.price}')">
+    Inquire via WhatsApp
+  </button>
+</div>
 
       <div class="mobile-info">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <button class="order-btn" onclick="order('${item.name}', '${item.price}')">Order Now</button>
+        <a class="order-btn" href="#" onclick="order('${item.name}', '${item.price}'); return false;">
+  Inquire via WhatsApp
+</a>Order Now</button>
       </div>
     </div>
   `;
@@ -328,12 +333,18 @@ bags.forEach((item, index) => {
 
 function order(name, price) {
   const phone = "2348139205497"; 
+
   const cleanName = name.replace('<br/>', ' ');
-  const msg = encodeURIComponent(`Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is this piece available?`);
-  
-  const url = `https://wa.me/${phone}?text=${msg}`;
-  
-  // Use window.location.href for better iOS compatibility
+  const msg = encodeURIComponent(
+    `Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is this piece available?`
+  );
+
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  const url = isIOS
+    ? `whatsapp://send?phone=${phone}&text=${msg}`
+    : `https://wa.me/${phone}?text=${msg}`;
+
   window.location.href = url;
 }
 
