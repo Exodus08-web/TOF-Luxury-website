@@ -129,9 +129,11 @@ h1 {
   color: white;
   text-align: center;
   padding: 20px;
+  pointer-events: none;
 }
 
-.item:hover .info-overlay { opacity: 1; }
+.item:hover .info-overlay { opacity: 1;
+  pointer-events: auto; }
 
 .info-overlay h3 {
   font-family: 'Playfair Display', serif;
@@ -254,7 +256,7 @@ footwear.forEach((shoe, index) => {
       <div class="info-overlay">
         <h3>${shoe.name}</h3>
         <p class="price">${shoe.price}</p>
-        <button class="order-btn" onclick="order('${shoe.name}')">Order via WhatsApp</button>
+        <a class="order-btn" href="#" onclick="order('${shoe.name}'); return false;">Order via WhatsApp</button>
       </div>
     </div>
   `;
@@ -267,10 +269,18 @@ window.addEventListener('load', () => {
 });
 
 function order(name) {
-  const phone = "2348139205497"; 
-  // We use window.location.href because iOS Safari blocks window.open popups
+  const phone = "2348139205497";
   const msg = encodeURIComponent(`Hello ToF Luxury, I'd like to order the footwear: ${name}.`);
-  window.location.href = `https://wa.me/${phone}?text=${msg}`;
+
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isIOS) {
+    // Force open WhatsApp app on iPhone
+    window.location.href = `whatsapp://send?phone=${phone}&text=${msg}`;
+  } else {
+    // Android + Desktop fallback
+    window.location.href = `https://wa.me/${phone}?text=${msg}`;
+  }
 }
 
 
