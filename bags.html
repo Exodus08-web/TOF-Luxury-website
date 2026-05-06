@@ -186,12 +186,17 @@ h1 {
   .item { padding: 8px; }
 
   /* FIX: Allow the overlay to exist on mobile */
+  @media (max-width: 768px) {
   .item-overlay { 
-    display: flex !important; 
-    opacity: 1; 
-    pointer-events: auto; 
+    opacity: 0;
+    pointer-events: none;
   }
 
+  .item.active .item-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
 
   .mobile-info { display: none; } /* Hide this to avoid double info */
 }
@@ -306,6 +311,20 @@ const bags = [
   ];
 
 const gallery = document.getElementById('gallery');
+
+document.querySelectorAll('.item').forEach(item => {
+  item.addEventListener('click', function(e) {
+    
+    // If user clicked the button, don't toggle
+    if (e.target.closest('.order-btn')) return;
+
+    // Close others (optional, cleaner UX)
+    document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+
+    // Open this one
+    this.classList.add('active');
+  });
+});
 
 // 1. Inject Items
 bags.forEach((item, index) => {
