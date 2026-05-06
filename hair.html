@@ -228,29 +228,15 @@ window.addEventListener('load', () => {
 });
 
 function order(name) {
-  const phone = "2348139205497"; 
-  const msg = encodeURIComponent(`Hello ToF Luxury, I'm interested in this hair: ${name}.`);
+  const phone = "2348139205497";
 
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const msg = encodeURIComponent(
+    "Hello ToF Luxury, I'm interested in this hair: " + name
+  );
 
-  // 1. Try native app (best for iPhone)
-  const appLink = `whatsapp://send?phone=${phone}&text=${msg}`;
+  const url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + msg;
 
-  // 2. Web fallback (always works)
-  const webLink = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
-
-  if (isIOS) {
-    // iPhone tries app first
-    window.location.href = appLink;
-
-    // fallback if blocked
-    setTimeout(() => {
-      window.location.href = webLink;
-    }, 1200);
-  } else {
-    // Android + desktop
-    window.location.href = webLink;
-  }
+  window.open(url, "_blank");
 }
 </script>
 
