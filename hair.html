@@ -234,9 +234,16 @@ function order(name) {
     "Hello ToF Luxury, I'm interested in this hair: " + name
   );
 
-  const url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + msg;
+  const app = "whatsapp://send?phone=" + phone + "&text=" + msg;
+  const web = "https://wa.me/" + phone + "?text=" + msg;
 
-  window.open(url, "_blank");
+  // Try WhatsApp app first
+  window.location.href = app;
+
+  // fallback if iPhone blocks it
+  setTimeout(() => {
+    window.location.href = web;
+  }, 800);
 }
 </script>
 
