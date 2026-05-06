@@ -124,7 +124,17 @@ nav a:hover { color: var(--gold); }
   object-fit: cover; 
   filter: contrast(1.05) brightness(0.9); 
   object-fit: cover;
+  pointer-events: none;
 }
+
+video::-webkit-media-controls {
+    display: none !important;
+}
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
+
 
 .hero-overlay {
   position: absolute;
@@ -171,7 +181,6 @@ nav a:hover { color: var(--gold); }
   width: 250px;
   height: 350px;
   position: relative;
-  transform-style: preserve-3d;
   will-change: transform;
   transform-style: preserve-3d;
   animation: spin 15s linear infinite;
@@ -365,9 +374,10 @@ nav.scrolled {
 <section class="hero">
   <div class="video-background">
     
-<video autoplay muted loop playsinline preload="metadata">
+<video autoplay muted loop playsinline preload="auto" webkit-playsinline disableremoteplayback>
   <source src="Background video.mp4" type="video/mp4">
 </video>
+
     <div class="hero-overlay"></div>
   </div>
 

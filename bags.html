@@ -21,8 +21,9 @@ body {
   background-color: var(--champagne);
   color: var(--dark);
   font-family: 'Inter', sans-serif;
-  padding: 0 8%;
+  padding: 0 8% 100px;
   animation: fadeIn 1.2s ease-out;
+  -webkit-text-size-adjust: 100%;
 }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -131,16 +132,20 @@ h1 {
 .item-overlay h3 {
   font-family: 'Playfair Display', serif;
   color: white;
-  font-size: 20px;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
+  font-size: clamp(14px, 4vw, 20px); 
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  width: 100%;
+  padding: 0 10px;
+  text-align: center;
+  word-wrap: break-word; 
 }
 
 .item-overlay .price {
   color: var(--gold);
-  font-size: 14px;
   letter-spacing: 1px;
-  margin-bottom: 25px;
+  font-size: clamp(12px, 3vw, 14px);
+  margin-bottom: 20px;
 }
 
 .order-btn {
@@ -149,8 +154,8 @@ h1 {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.4); 
   color: white;
-  padding: 12px 25px;
-  font-size: 10px;
+  padding: 10px 20px;
+  font-size: clamp(8px, 2.5vw, 10px);
   letter-spacing: 2px;
   text-transform: uppercase;
   border-radius: 40px;                
@@ -176,8 +181,9 @@ h1 {
     display: flex !important; 
     opacity: 0; 
     pointer-events: none; 
+     padding: 15px; 
+    box-sizing: border-box;
   }
-
   .item:active .item-overlay { 
     opacity: 1; 
   }
@@ -307,13 +313,13 @@ bags.forEach((item, index) => {
       <div class="item-overlay">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <button class="order-btn" type="button" onclick="order('${item.name}', '${item.price}')">Inquire via WhatsApp</button>
+        <button class="order-btn" onclick="order('${item.name}', '${item.price}')">Inquire via WhatsApp</button>
       </div>
 
       <div class="mobile-info">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <button class="order-btn" type="button" onclick="order('${item.name}', '${item.price}')">Order Now</button>
+        <button class="order-btn" onclick="order('${item.name}', '${item.price}')">Order Now</button>
       </div>
     </div>
   `;
@@ -322,13 +328,14 @@ bags.forEach((item, index) => {
 
 function order(name, price) {
   const phone = "2348139205497"; 
-  
   const cleanName = name.replace('<br/>', ' ');
   const msg = encodeURIComponent(`Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is this piece available?`);
   
-  window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+  const url = `https://wa.me/${phone}?text=${msg}`;
+  
+  // Use window.location.href for better iOS compatibility
+  window.location.href = url;
 }
-
 
 window.addEventListener('load', () => {
   const items = document.querySelectorAll('.item');
@@ -339,7 +346,7 @@ window.addEventListener('load', () => {
 
 
 
-const backBtn = document.querySelector('.back-btn');
+const backBtn = document.querySelector('.back-pill');
 backBtn.addEventListener('mousemove', (e) => {
     const x = (e.pageX - backBtn.offsetLeft - backBtn.offsetWidth / 2) * 0.2;
     const y = (e.pageY - backBtn.offsetTop - backBtn.offsetHeight / 2) * 0.2;
