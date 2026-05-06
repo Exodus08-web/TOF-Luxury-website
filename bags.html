@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Bag Collection | ToF Luxury</title>
-
+<!-- Fonts -->
 <link href="https://googleapis.com" rel="stylesheet">
 
 <style>
+/* 1. CORE THEME */
 :root {
   --gold: #d4af37;
   --champagne: #f7f3f0;
@@ -21,14 +22,13 @@ body {
   background-color: var(--champagne);
   color: var(--dark);
   font-family: 'Inter', sans-serif;
-  padding: 0 8% 100px;
+  padding: 0 8%;
   animation: fadeIn 1.2s ease-out;
-  -webkit-text-size-adjust: 100%;
 }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-
+/* MATURED PILL BUTTON */
 .nav-header {
   padding: 50px 0 20px;
 }
@@ -54,7 +54,7 @@ body {
   transition: transform 0.4s ease;
 }
 
-
+/* Hover State: Solid Black with Gold Text */
 .back-pill:hover {
   background: var(--dark);
   color: var(--gold);
@@ -64,7 +64,7 @@ body {
 }
 
 .back-pill:hover svg {
-  transform: translateX(-5px); 
+  transform: translateX(-5px); /* Arrow moves inward */
 }
 
 @media (max-width: 768px) {
@@ -81,7 +81,7 @@ body {
 }
 
 
-
+/* 3. HEADER */
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(32px, 5vw, 48px);
@@ -92,7 +92,7 @@ h1 {
   text-align: center;
 }
 
-
+/* 4. THE GALLERY GRID */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Clean 3-column grid */
@@ -103,17 +103,18 @@ h1 {
 .item {
   position: relative;
   background: white;
-  padding: 15px; 
+  padding: 15px; /* Creates a clean "Polaroid" border feel */
   transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
 .item img {
   width: 100%;
-  aspect-ratio: 4/5; 
+  aspect-ratio: 4/5; /* Uniform height for all items */
   object-fit: cover;
   display: block;
 }
 
+/* 5. ITEM INFO - Sophisticated Overlay */
 .item-overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -132,33 +133,29 @@ h1 {
 .item-overlay h3 {
   font-family: 'Playfair Display', serif;
   color: white;
-  font-size: clamp(14px, 4vw, 20px); 
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-  width: 100%;
-  padding: 0 10px;
-  text-align: center;
-  word-wrap: break-word; 
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
 }
 
 .item-overlay .price {
   color: var(--gold);
+  font-size: 14px;
   letter-spacing: 1px;
-  font-size: clamp(12px, 3vw, 14px);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .order-btn {
-  background: rgba(255, 255, 255, 0.2); 
-  backdrop-filter: blur(10px);         
+  background: rgba(255, 255, 255, 0.2); /* Transparent glass base */
+  backdrop-filter: blur(10px);         /* The frosted look */
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.4); 
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Thin glass border */
   color: white;
-  padding: 10px 20px;
-  font-size: clamp(8px, 2.5vw, 10px);
+  padding: 12px 25px;
+  font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  border-radius: 40px;                
+  border-radius: 40px;                /* Modern pill shape */
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -176,27 +173,27 @@ h1 {
   .gallery { grid-template-columns: 1fr 1fr; gap: 15px; }
   .item { padding: 8px; }
 
-  
+  /* FIX: Allow the overlay to exist on mobile */
   .item-overlay { 
     display: flex !important; 
     opacity: 0; 
     pointer-events: none; 
-     padding: 15px; 
-    box-sizing: border-box;
   }
+
+  /* FIX: Show overlay when finger touches the item */
   .item:active .item-overlay { 
     opacity: 1; 
-    pointer-events: auto;
   }
 
-  .mobile-info { display: none; } 
+  .mobile-info { display: none; } /* Hide this to avoid double info */
 }
 
+/* 2. SPEED UP THE ENTRANCE */
 .item {
   opacity: 0;
-  transform: translateY(20px); 
+  transform: translateY(20px); /* Reduced movement for speed */
   filter: blur(5px);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Much faster transition */
 }
 
 .item.visible {
@@ -206,9 +203,9 @@ h1 {
 }
 
 @media (min-width: 769px) {
-  .mobile-info { display: none; } 
+  .mobile-info { display: none; } /* Hide on desktop */
 }
-
+/* Initial state for items (Hidden and shifted) */
 .item {
   position: relative;
   background: white;
@@ -216,17 +213,17 @@ h1 {
   opacity: 0;
   transform: translateY(40px) scale(0.95);
   filter: blur(10px);
-  transition: all 1.2s cubic-bezier(0.2, 0, 0.2, 1); 
+  transition: all 1.2s cubic-bezier(0.2, 0, 0.2, 1); /* Silk-smooth movement */
 }
 
-
+/* The 'Active' state triggered by JS */
 .item.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0);
 }
 
-
+/* Premium Image Reveal */
 .image-container {
   overflow: hidden;
   position: relative;
@@ -237,20 +234,20 @@ h1 {
   aspect-ratio: 4/5;
   object-fit: cover;
   display: block;
-  transition: transform 2s var(--ease); 
+  transition: transform 2s var(--ease); /* Slow, expensive zoom */
 }
 
 .item:hover img {
   transform: scale(1.1);
 }
 
-
+/* The 'Aura' Hover effect */
 .item:hover {
   box-shadow: 0 30px 60px rgba(0,0,0,0.08);
   z-index: 10;
 }
 
-
+/* High-End Back Button Animation */
 .back-btn span {
   display: inline-block;
   transition: transform 0.4s var(--ease);
@@ -278,7 +275,7 @@ h1 {
 <h1>The Bag Collection</h1>
 
 <div class="gallery" id="gallery">
- 
+  <!-- Items injected via JS -->
 </div>
 
 <script>
@@ -302,9 +299,9 @@ const bags = [
 
 const gallery = document.getElementById('gallery');
 
-
+// 1. Inject Items
 bags.forEach((item, index) => {
- 
+  // We use item.price in the onclick so the price is sent too!
   gallery.innerHTML += `
     <div class="item" style="transition-delay: ${index * 0.1}s">
       <div class="image-container">
@@ -312,42 +309,37 @@ bags.forEach((item, index) => {
       </div>
       
       <div class="item-overlay">
-  <h3>${item.name}</h3>
-  <p class="price">${item.price}</p>
-  <button class="order-btn" onclick="order('${item.name}', '${item.price}')">
-    Inquire via WhatsApp
-  </button>
-</div>
+        <h3>${item.name}</h3>
+        <p class="price">${item.price}</p>
+        <a class="order-btn" href="#" onclick="order('${item.name}', '${item.price}')">
+  Inquire via WhatsApp
+</a>
+      </div>
 
       <div class="mobile-info">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <a class="order-btn" href="#" onclick="order('${item.name}', '${item.price}'); return false;">
+        <a class="order-btn" href="#" onclick="order('${item.name}', '${item.price}')">
   Inquire via WhatsApp
-</a>Order Now</button>
+</a>
       </div>
     </div>
   `;
 });
 
-
+// 2. THE FIX: The missing Order Function
 function order(name, price) {
   const phone = "2348139205497"; 
-
   const cleanName = name.replace('<br/>', ' ');
   const msg = encodeURIComponent(
-    `Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is this piece available?`
+    `Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is it available?`
   );
 
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  const url = isIOS
-    ? `whatsapp://send?phone=${phone}&text=${msg}`
-    : `https://wa.me/${phone}?text=${msg}`;
-
-  window.location.href = url;
+  // iPhone-safe redirect
+ window.location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
 }
 
+// 3. Trigger Entrance Animation
 window.addEventListener('load', () => {
   const items = document.querySelectorAll('.item');
   items.forEach(item => {
@@ -356,8 +348,8 @@ window.addEventListener('load', () => {
 });
 
 
-
-const backBtn = document.querySelector('.back-pill');
+// 3. Magnetic Back Button Logic
+const backBtn = document.querySelector('.back-btn');
 backBtn.addEventListener('mousemove', (e) => {
     const x = (e.pageX - backBtn.offsetLeft - backBtn.offsetWidth / 2) * 0.2;
     const y = (e.pageY - backBtn.offsetTop - backBtn.offsetHeight / 2) * 0.2;
@@ -366,6 +358,7 @@ backBtn.addEventListener('mousemove', (e) => {
 backBtn.addEventListener('mouseleave', () => {
     backBtn.style.transform = `translate(0, 0)`;
 });
+
 
 
 
