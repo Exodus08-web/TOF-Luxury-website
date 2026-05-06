@@ -146,19 +146,31 @@ h1 {
 }
 
 .order-btn {
-  background: rgba(255, 255, 255, 0.2); /* Transparent glass base */
-  backdrop-filter: blur(10px);         /* The frosted look */
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Thin glass border */
-  color: white;
+  display: inline-flex;              /* 🔥 stronger than inline-block */
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: rgba(255, 255, 255, 0.35);   /* 🔥 make it visible */
+  color: #1a1a1a;
+
   padding: 12px 25px;
   font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  border-radius: 40px;                /* Modern pill shape */
+
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .order-btn:hover {
@@ -176,14 +188,10 @@ h1 {
   /* FIX: Allow the overlay to exist on mobile */
   .item-overlay { 
     display: flex !important; 
-    opacity: 0; 
-    pointer-events: none; 
+    opacity: 1; 
+    pointer-events: auto; 
   }
 
-  /* FIX: Show overlay when finger touches the item */
-  .item:active .item-overlay { 
-    opacity: 1; 
-  }
 
   .mobile-info { display: none; } /* Hide this to avoid double info */
 }
@@ -311,7 +319,7 @@ bags.forEach((item, index) => {
       <div class="item-overlay">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <a class="order-btn" href="#" onclick="order('${item.name}', '${item.price}')">
+        <a class="order-btn" href="#" onclick="event.preventDefault(); order('${item.name}', '${item.price}')">
   Inquire via WhatsApp
 </a>
       </div>
@@ -319,25 +327,13 @@ bags.forEach((item, index) => {
       <div class="mobile-info">
         <h3>${item.name}</h3>
         <p class="price">${item.price}</p>
-        <a class="order-btn" href="#" onclick="order('${item.name}', '${item.price}')">
+        <a class="order-btn" href="#" onclick="event.preventDefault(); order('${item.name}', '${item.price}')">
   Inquire via WhatsApp
 </a>
       </div>
     </div>
   `;
 });
-
-// 2. THE FIX: The missing Order Function
-function order(name, price) {
-  const phone = "2348139205497"; 
-  const cleanName = name.replace('<br/>', ' ');
-  const msg = encodeURIComponent(
-    `Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is it available?`
-  );
-
-  // iPhone-safe redirect
- window.location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
-}
 
 // 3. Trigger Entrance Animation
 window.addEventListener('load', () => {
@@ -359,7 +355,22 @@ backBtn.addEventListener('mouseleave', () => {
     backBtn.style.transform = `translate(0, 0)`;
 });
 
+function order(name, price) {
+  const phone = "2348139205497";
+  const cleanName = name.replace('<br/>', ' ');
 
+  const msg = encodeURIComponent(
+    `Hello ToF Luxury, I'm interested in the ${cleanName} which costs ${price}. Is it available?`
+  );
+
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isIOS) {
+    window.location.href = `whatsapp://send?phone=${phone}&text=${msg}`;
+  } else {
+    window.location.href = `https://wa.me/${phone}?text=${msg}`;
+  }
+}
 
 
 </script>
